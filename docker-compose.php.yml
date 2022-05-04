@@ -5,7 +5,11 @@ services:
     build:
       context: ./php/v
       args:
-        PHP_VER: 
+        PHP_VER: ${PHP_VER}
       dockerfile: php.dockerfile
     networks:
-      - laravel
+      - ${NETWORK_DB}
+
+networks:
+  ${NETWORK_DB}:
+    external: true

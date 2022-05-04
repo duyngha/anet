@@ -6,8 +6,8 @@ services:
     ports:
       - 8080:80
     networks:
-      - medici_network
+      - ${NETWORK_DB}
 
 networks:
-  medici_network:
+  ${NETWORK_DB}:
     external: true
