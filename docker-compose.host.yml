@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  app:
+    image: nginx:stable-alpine
+    ports:
+      - 8080:80
+    networks:
+      - medici_network
+
+networks:
+  medici_network:
+    external: true

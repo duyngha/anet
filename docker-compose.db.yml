@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=admin
+      - MYSQL_DATABASE=laravel
+      - MYSQL_PASSWORD=secret
+    restart: always
+    networks:
+      - medici_network
+
+networks:
+  medici_network:
+    name: medici_network
