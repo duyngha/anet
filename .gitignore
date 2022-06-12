@@ -1,5 +1,13 @@
+# OS
 .DS_Store
-.env
 
+# Application
+.env
 /www/*
 !/www/.gitkeep
+/data/*
+!/data/.gitkeep
+Makefile
+
+# Editor
+.vscode

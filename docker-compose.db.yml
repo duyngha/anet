@@ -1,19 +1,43 @@
 version: '3.9'
 
 services:
-  db:
-    image: mysql:latest
+
+  ################################
+  # MySQL service
+  ################################
+  mysql:
+    image: mysql:${MYSQL_VER}
+    container_name: ${PROJECT_NAME}-mysql
     ports:
-      - 3306:3306
+      - 33066:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    restart: always
-    networks:
-      - ${NETWORK_DB}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  ################################
+  # PhpMyadmin service
+  ################################
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${PROJECT_NAME}-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+     - mysql
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+     - 8888:80
 
 networks:
-  ${NETWORK_DB}:
-    name: ${NETWORK_DB}
+  default:
+    external:
+      name: ${SYSTEM_NETWORK}

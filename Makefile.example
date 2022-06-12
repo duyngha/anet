@@ -1,0 +1,22 @@
+export SYSTEM_NETWORK=app_network
+
+create-network:
+	@docker network create ${SYSTEM_NETWORK} 2> /dev/null || true
+
+build-db: create-network
+	docker-compose -f docker-compose.db.yml up -d
+
+init:
+	make build-db
+
+build-app:
+	docker-compose -f docker-compose.app.yml up --build
+
+start-app:
+	docker-compose -f docker-compose.app.yml start
+
+restart-app:
+	docker-compose -f docker-compose.app.yml restart
+
+down-app:
+	docker-compose -f docker-compose.app.yml down -v
