@@ -8,6 +8,8 @@
 /data/*
 !/data/.gitkeep
 Makefile
+/log/nginx/*
+!/log/nginx/.gitkeep
 
 # Editor
 .vscode
