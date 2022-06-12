@@ -2,6 +2,8 @@ ARG PHP_FPM_VERSION
 
 FROM php:${PHP_FPM_VERSION}-fpm
 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 RUN set -xe; \
   apt-get update -yqq && \
   pecl channel-update pecl.php.net && \
@@ -17,6 +19,20 @@ RUN set -xe; \
   fi && \
   docker-php-ext-install zip && \
   php -m | grep -q 'zip'
+
+RUN apt-get install -y libfreetype6-dev libpng-dev libjpeg-dev autoconf g++ make libssl-dev
+
+RUN docker-php-ext-configure gd --with-jpeg && \
+    docker-php-ext-install gd pdo pdo_mysql exif
+
+################################
+# Mongo extension
+################################
+ARG INSTALL_MONGOEXT=false
+RUN if [ ${INSTALL_MONGOEXT} = true ]; then \
+      pecl install mongodb && \
+      docker-php-ext-enable mongodb; \
+fi
 
 ################################
 # Check PHP version

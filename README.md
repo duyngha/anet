@@ -1,10 +1,11 @@
 # Anet
-Build a simple network for your system based on Docker and Docker
+Build a simple network for your system based on Docker
 
 ## Installation
 - Download the repository
-- Create Makefile from Makefile.example
+- Create `Makefile` from `Makefile.example`
 - Modify your docker-compose.app.yml
+- Make `.env` from `.env.example`
 
 ## How to use
 ### Create the network and database for your system
